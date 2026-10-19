@@ -1,7 +1,5 @@
 # lightline-diagnostics
 
-## Inspired projects
+Unified diagnostic indicators for [lightline.vim](https://github.com/itchyny/lightline.vim).
 
-- [halkn/lightline-lsp](https://github.com/halkn/lightline-lsp)
-- [max-baz/lightline-ale](https://github.com/max-baz/lightline-ale)
-- [spywhere/lightline-lsp](https://github.com/spywhere/lightline-lsp)
+Please read [help](doc/lightline-diagnostics.txt) for details.
