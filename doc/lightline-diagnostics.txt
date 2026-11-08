@@ -1,0 +1,177 @@
+*lightline-diagnostics.txt*	Unified diagnostic indicators for lightline
+
+==============================================================================
+CONTENTS					*lightline-diagnostics-contents*
+
+INTRODUCTION				|lightline-diagnostics-introduction|
+INSTALLATION				|lightline-diagnostics-installation|
+USAGE					|lightline-diagnostics-usage|
+FUNCTIONS				|lightline-diagnostics-functions|
+CONFIGURATIONS				|lightline-diagnostics-configurations|
+
+==============================================================================
+INTRODUCTION 				*lightline-diagnostics-introduction*
+
+This plugin provides some functions to indicate each kind of summed diagnostic
+counts reported by supported diagnostic providers. These functions can work as
+a |lightline| component.
+
+Current supported diagnostic providers are
+
+- https://github.com/dense-analysis/ale
+- https://github.com/yegappan/lsp
+
+This plugin is inspired by some similar plugins below.
+
+- https://github.com/halkn/lightline-lsp (for vim-lsp)
+- https://github.com/max-baz/lightline-ale (for ale)
+- https://github.com/spywhere/lightline-lsp (for neovim built-in lsp)
+
+==============================================================================
+INSTALLATION				*lightline-diagnostics-installation*
+
+Use your favorite plugin manager, or use |:packadd| if you are a Vim8 (or
+later) user.
+
+Additionally, you need to install some dependencies.
+
+- https://github.com/itchyny/lightline.vim
+- https://github.com/dense-analysis/ale
+- https://github.com/yegappan/lsp
+
+==============================================================================
+USAGE 						*lightline-diagnostics-usage*
+
+1. Register lightline-diagnostics functions as lightline components.
+>vim
+	let g:lightline = {
+	\   'component_expand:' {
+	\     'diags_errors': 'lightline#diagnostics#errors',
+	\     'diags_warnings': 'lightline#diagnostics#warns',
+	\     'diags_hints': 'lightline#diagnostics#hints',
+	\     'diags_infos': 'lightline#diagnostics#infos',
+	\     'diags_ok': 'lightline#diagnostics#ok'
+	\   }
+	\ }
+
+2. Register component types for the lightline components.
+>vim
+	let g:lightline = {
+	\   'component_type': {
+	\     'diags_errors': 'error',
+	\     'diags_warnings': 'warning',
+	\     'diags_hints': 'left',
+	\     'diags_infos': 'left',
+	\     'diags_ok': 'left'
+	\   }
+	\ }
+
+3. Register the lightline components to display them on the statusline.
+>vim
+	let g:lightline = {
+	\   'active': {
+	\     'left': [
+	\       ['mode', 'paste'],
+	\       ['readonly', 'relativepath', 'modified'],
+	\       ['diags_errors', 'diags_warnings', 'diags_hints', 'diags_infos', 'diags_ok']
+	\     ]
+	\   }
+	\ }
+
+==============================================================================
+FUNCTIONS 				*lightline-diagnostics-functions*
+
+lightline#diagnostics#infos()			*lightline#diagnostics#infos()*
+	An unified "info" diagnostic indicator for the current buffer.
+
+	If no diagnostic providers found any problems at info level for the
+	current buffer, this function returns an empty string. Otherwise
+	returns info diagnostic counts for the current buffer with the prefix.
+
+	See |g:lightline_diagnostics_infos_indicator_prefix| to change the
+	prefix.
+
+	Return type: |String|
+
+lightline#diagnostics#warns()			*lightline#diagnostics#warns()*
+	An unified "warn" diagnostic indicator for the current buffer.
+
+	If no diagnostic providers found any problems at warn level for the
+	current buffer, this function returns an empty string. Otherwise
+	returns warn diagnostic counts for the current buffer with the prefix.
+
+	See |g:lightline_diagnostics_warns_indicator_prefix| to change the
+	prefix.
+
+	Return type: |String|
+
+lightline#diagnostics#hints()			*lightline#diagnostics#hints()*
+	An unified "hint" diagnostic indicator for the current buffer.
+
+	If no diagnostic providers found any problems at hint level for the
+	current buffer, this function returns an empty string. Otherwise
+	returns hint diagnostic counts for the current buffer with the prefix.
+
+	See |g:lightline_diagnostics_hints_indicator_prefix| to change the
+	prefix.
+
+	Return type: |String|
+
+lightline#diagnostics#errors()			*lightline#diagnostics#errors()*
+	An unified "error" diagnostic indicator for the current buffer.
+
+	If no diagnostic providers found any problems at error level for the
+	current buffer, this function returns an empty string. Otherwise
+	returns error diagnostic counts for the current buffer with the
+	prefix.
+
+	See |g:lightline_diagnostics_errors_indicator_prefix| to change the
+	prefix.
+
+	Return type: |String|
+
+lightline#diagnostics#ok()			*lightline#diagnostics#ok()*
+	An unified "ok" diagnostic indicator for the current buffer.
+
+	If no diagnostic providers found any problems at all level for the
+	current buffer, this function returns a indicator string. Otherwise
+	returns an empty string.
+
+	See |g:lightline_diagnostics_ok_indicator| to change the indicator.
+
+	Return type: |String|
+
+==============================================================================
+CONFIGURATIONS 				*lightline-diagnostics-configurations*
+
+				*g:lightline_diagnostics_infos_indicator_prefix*
+g:lightline_diagnostics_infos_indicator_prefix
+	The prefix for |lightline#diagnostics#infos()|.
+
+	Default: "I: "
+
+				*g:lightline_diagnostics_hints_indicator_prefix*
+g:lightline_diagnostics_hints_indicator_prefix
+	The prefix for |lightline#diagnostics#hints()|.
+
+	Default: "H: "
+
+				*g:lightline_diagnostics_warns_indicator_prefix*
+g:lightline_diagnostics_warns_indicator_prefix
+	The prefix for |lightline#diagnostics#warns()|.
+
+	Default: "W: "
+
+				*g:lightline_diagnostics_errors_indicator_prefix*
+g:lightline_diagnostics_errors_indicator_prefix
+	The prefix for |lightline#diagnostics#errors()|.
+
+	Default: "E: "
+
+g:lightline_diagnostics_ok_indicator	*g:lightline_diagnostics_ok_indicator*
+	The indicator for |lightline#diagnostics#ok()|.
+
+	Default: "OK"
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
