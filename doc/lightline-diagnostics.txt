@@ -133,9 +133,10 @@ lightline#diagnostics#errors()			*lightline#diagnostics#errors()*
 lightline#diagnostics#ok()			*lightline#diagnostics#ok()*
 	An unified "ok" diagnostic indicator for the current buffer.
 
-	If no diagnostic providers found any problems at all level for the
-	current buffer, this function returns a indicator string. Otherwise
-	returns an empty string.
+	If at least one diagnostic provider returns a diagnostic result and no
+	diagnostic providers found any problems at all level for the current
+	buffer, this function returns a indicator string. Otherwise returns an
+	empty string.
 
 	See |g:lightline_diagnostics_ok_indicator| to change the indicator.
 

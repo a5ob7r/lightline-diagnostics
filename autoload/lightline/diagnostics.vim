@@ -29,9 +29,11 @@ function! lightline#diagnostics#errors() abort
 endfunction
 
 function! lightline#diagnostics#ok() abort
-  const l:total_count = s:total_count() ?? 0
+  const l:total_count = s:total_count()
 
-  return l:total_count == 0 ? s:lightline_diagnostics_ok_indicator : ''
+  const is_no_problem_found = type(l:total_count) == v:t_number && l:total_count == 0
+
+  return is_no_problem_found ? s:lightline_diagnostics_ok_indicator : ''
 endfunction
 
 function! s:infos_count() abort
@@ -50,8 +52,14 @@ function! s:errors_count() abort
   return lightline#diagnostics#lsp_vim9#errors_count() + lightline#diagnostics#ale#errors_count()
 endfunction
 
+" Return "v:null" if all of total counts are "v:null".
 function! s:total_count() abort
-  return lightline#diagnostics#lsp_vim9#total_count() + lightline#diagnostics#ale#total_count()
+  const l:total_counts = [
+  \   lightline#diagnostics#lsp_vim9#total_count(),
+  \   lightline#diagnostics#ale#total_count()
+  \ ]
+
+  return reduce(l:total_counts, { acc, v -> type(v) == v:t_none ? acc : acc + v }, v:null)
 endfunction
 
 " vim: set expandtab tabstop=2 shiftwidth=2 foldmethod=marker:
